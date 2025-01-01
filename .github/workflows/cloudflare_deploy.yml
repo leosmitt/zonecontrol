@@ -45,9 +45,44 @@ jobs:
 
       - name: Set environment variables
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-          CLOUDFLARE_FQDN: ${{ secrets.CLOUDFLARE_FQDN }}
+          CLOUDFLARE_API_TOKEN: ${{ f0dccb5f8cf92548211ae7bf2af239790cedd }}
+          CLOUDFLARE_ZONE_ID: ${{ f59448ff7411a81dd007a3e2f5269147 }}
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight
+
+jobs:
+  apply-settings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install requests pydantic tenacity pyyaml
+
+      - name: Run Cloudflare script
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ f0dccb5f8cf92548211ae7bf2af239790cedd }}
+        run: |
+          source venv/bin/activate
+          python scripts/apply_cloudflare.py --config config/cloudflare.yaml
+
+      - name: Handle errors
+        if: failure()
+        run: echo "::error::Workflow failed at some steps." }}
+          CLOUDFLARE_FQDN: ${{ leoserver.ip-ddns.com }}
         run: |
           source venv/bin/activate
           echo "Environment variables set."
@@ -55,9 +90,9 @@ jobs:
 
       - name: Run Cloudflare script
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-          CLOUDFLARE_FQDN: ${{ secrets.CLOUDFLARE_FQDN }}
+          CLOUDFLARE_API_TOKEN: ${{ f0dccb5f8cf92548211ae7bf2af239790cedd }}
+          CLOUDFLARE_ZONE_ID: ${{ f59448ff7411a81dd007a3e2f5269147 }}
+          CLOUDFLARE_FQDN: ${{ leoserver.ip-ddns.com }}
         run: |
           set -e  # Ensure the script exits on any error
           source venv/bin/activate
