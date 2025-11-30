@@ -23,7 +23,7 @@ cloudflare:
         ssl: "strict"
         min_tls_version: "1.3"  # Override the default for this zone
 
-    - id: "7b8d0bb0725b535758be4beea4ddbb24"
-      domain: "panel.gwinhub.qzz.io"
+    - id: "0987654321fedcba0987654321fedcba"
+      domain: "yrrzee.org"
       # This zone can inherit settings from default without overriding anything
       settings: {}
