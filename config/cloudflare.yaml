@@ -16,14 +16,14 @@ cloudflare:
     challenge_ttl: 3600
 
   zones:
-    - id: "b441db6e139659910adc1155990213e2"
-      domain: "freesubnet.com"
+    - id: "7b8d0bb0725b535758be4beea4ddbb24"
+      domain: "gwinhub.qzz.io"
       # This zone inherits all settings from default except those explicitly defined here
       settings:
         ssl: "strict"
         min_tls_version: "1.3"  # Override the default for this zone
 
-    - id: "50f3f9a9c13476185106ff4623757ca5"
-      domain: "linuxwebservice.net"
+    - id: "7b8d0bb0725b535758be4beea4ddbb24"
+      domain: "panel.gwinhub.qzz.io"
       # This zone can inherit settings from default without overriding anything
       settings: {}
